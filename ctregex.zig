@@ -197,7 +197,7 @@ pub const RegexParser = struct {
         @compileError("\n" ++ error_slice1 ++ error_slice2 ++ line_prefix ++ parser.iterator.bytes[start_idx..end_idx] ++ line_suffix ++ " " ** (start_spaces + line_prefix.len - 2) ++ "^");
     }
 
-    const ParseResult = struct {
+    pub const ParseResult = struct {
         root: Expr,
         captures: []const *const Grouped,
     };
