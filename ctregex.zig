@@ -104,7 +104,7 @@ const RegexParser = struct {
         };
     }
 
-    fn parse(comptime source: []const u8) ?ParseResult {
+    pub fn parse(comptime source: []const u8) ?ParseResult {
         var parser = RegexParser.init(source);
         return parser.parseRoot();
     }
@@ -860,7 +860,7 @@ inline fn matchSubExpr(comptime sub_expr: RegexParser.SubExpr, comptime options:
     return null;
 }
 
-inline fn matchExpr(comptime expr: RegexParser.Expr, comptime options: MatchOptions, str: []const options.encoding.CharT(), result: anytype) !?@TypeOf(str) {
+pub inline fn matchExpr(comptime expr: RegexParser.Expr, comptime options: MatchOptions, str: []const options.encoding.CharT(), result: anytype) !?@TypeOf(str) {
     const min_len = comptime expr.minLen(options.encoding);
     if (str.len < min_len) return null;
 
