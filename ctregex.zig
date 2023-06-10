@@ -92,7 +92,7 @@ fn ctIntStr(comptime int: anytype) []const u8 {
 /// rest_char ::= <char>-special
 /// char_class ::= '\d' | '\s'
 /// ```
-const RegexParser = struct {
+pub const RegexParser = struct {
     iterator: std.unicode.Utf8Iterator,
     captures: []const *const Grouped = &[0]*const Grouped{},
     curr_capture: usize = 0,
