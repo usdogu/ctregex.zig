@@ -92,7 +92,7 @@ fn ctIntStr(comptime int: anytype) []const u8 {
 /// rest_char ::= <char>-special
 /// char_class ::= '\d' | '\s'
 /// ```
-pub const RegexParser = struct {
+const RegexParser = struct {
     iterator: std.unicode.Utf8Iterator,
     captures: []const *const Grouped = &[0]*const Grouped{},
     curr_capture: usize = 0,
@@ -104,7 +104,7 @@ pub const RegexParser = struct {
         };
     }
 
-    pub fn parse(comptime source: []const u8) ?ParseResult {
+    fn parse(comptime source: []const u8) ?ParseResult {
         var parser = RegexParser.init(source);
         return parser.parseRoot();
     }
@@ -197,7 +197,7 @@ pub const RegexParser = struct {
         @compileError("\n" ++ error_slice1 ++ error_slice2 ++ line_prefix ++ parser.iterator.bytes[start_idx..end_idx] ++ line_suffix ++ " " ** (start_spaces + line_prefix.len - 2) ++ "^");
     }
 
-    pub const ParseResult = struct {
+    const ParseResult = struct {
         root: Expr,
         captures: []const *const Grouped,
     };
@@ -860,7 +860,7 @@ inline fn matchSubExpr(comptime sub_expr: RegexParser.SubExpr, comptime options:
     return null;
 }
 
-pub inline fn matchExpr(comptime expr: RegexParser.Expr, comptime options: MatchOptions, str: []const options.encoding.CharT(), result: anytype) !?@TypeOf(str) {
+inline fn matchExpr(comptime expr: RegexParser.Expr, comptime options: MatchOptions, str: []const options.encoding.CharT(), result: anytype) !?@TypeOf(str) {
     const min_len = comptime expr.minLen(options.encoding);
     if (str.len < min_len) return null;
 
